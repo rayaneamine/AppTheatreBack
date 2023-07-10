@@ -17,21 +17,14 @@ app.use(cors());
 app.use(express.static("public"));
 app.use("/images", express.static("images"));
 
-//plays document
+//plays document (pièces)
 app.use("/plays", require("./routes/playsRoute.js"));
-app.use("/plays/name/:name", require("./routes/playsRoute.js"));
-app.use("/plays/theatre/:theatre", require("./routes/playsRoute.js"));
-app.use("/plays", require("./routes/playsRoute.js"));
-
-//actors document
+//actors document (acteurs)
 app.use("/actors", require("./routes/actorsRoute.js"));
-app.use("/actors/name/:name", require("./routes/actorsRoute.js"));
-app.use("/actors", require("./routes/actorsRoute.js"));
-
-//locations document
+//locations document (lieux)
 app.use("/locations", require("./routes/locationsRoute.js"));
-app.use("/locations/name/:name", require("./routes/locationsRoute.js"));
-app.use("/locations", require("./routes/locationsRoute.js"));
+//News document (actualités)
+app.use("/news", require("./routes/newsRoute.js"));
 
 app.listen(PORT, () => {
   // this code will run the application we want theapplication to run after connecting to the DB

@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const playSchema = mongoose.Schema({
   name: String,
   description: String,
+  thumbnail: String,
   imagePath: String,
   videoPath: String,
   duration: String,

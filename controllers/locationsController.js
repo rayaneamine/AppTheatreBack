@@ -13,7 +13,7 @@ const getAllLocations = async (req, res) => {
 const getLocationByTheatre = async (req, res) => {
   //To get data using an id
   try {
-    const theatre = req.params.type;
+    const theatre = req.params.theatre;
     const location = await Locations.find({ theatre: theatre });
     res.status(200).json(location);
   } catch (error) {

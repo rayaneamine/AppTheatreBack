@@ -8,7 +8,7 @@ const {
 } = require("../controllers/locationsController.js");
 
 router.get("/", getAllLocations);
-router.get("/:type", getLocationByTheatre);
+router.get("/:theatre", getLocationByTheatre);
 router.post("/", createNewLocation);
 
 module.exports = router;

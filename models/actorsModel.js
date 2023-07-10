@@ -5,6 +5,8 @@ const actorSchema = mongoose.Schema({
   role: String,
   biography: String,
   imagePath: String,
+  videoPath: String,
+  theatre: String,
   plays: Array,
 });
 
