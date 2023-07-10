@@ -13,13 +13,25 @@ const getAllActors = async (req, res) => {
 const getActorByPlay = async (req, res) => {
   //To get data using an id
   try {
-    const play = req.params.type;
+    const play = req.params.play;
     const actor = await Actors.find({ plays: play });
     res.status(200).json(actor);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
+
+const getActorByTheatre = async (req, res) => {
+  //To get data using an id
+  try {
+    const theatre = req.params.theatre;
+    const actor = await Actors.find({ theatre: theatre });
+    res.status(200).json(actor);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 const createNewActor = async (req, res) => {
   //To save data in the database
   try {
@@ -31,4 +43,9 @@ const createNewActor = async (req, res) => {
   }
 };
 
-module.exports = { getAllActors, getActorByPlay, createNewActor };
+module.exports = {
+  getAllActors,
+  getActorByPlay,
+  getActorByTheatre,
+  createNewActor,
+};

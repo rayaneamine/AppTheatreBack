@@ -32,6 +32,21 @@ const getPlayByTheatre = async (req, res) => {
   }
 };
 
+const getPlayById = async (req, res) => {
+  //To get data using an id
+  try {
+    const theatre = req.params.theatre;
+    const id = req.params.id;
+    const play = await Plays.findOne({ _id: id, theatre: theatre });
+    if (!play) {
+      return res.status(404).json({ message: "Play not found" });
+    }
+    res.status(200).json(play);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 const createNewPlay = async (req, res) => {
   //To save data in the database
   try {
@@ -47,5 +62,6 @@ module.exports = {
   getAllPlays,
   getPlayByName,
   getPlayByTheatre,
+  getPlayById,
   createNewPlay,
 };
