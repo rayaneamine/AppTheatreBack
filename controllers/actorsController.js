@@ -21,6 +21,18 @@ const getActorByPlay = async (req, res) => {
   }
 };
 
+const getActorByName = async (req, res) => {
+  //To get data using an id
+  try {
+    const theatre = req.params.theatre;
+    const name = req.params.name;
+    const actor = await Actors.findOne({ name: name, theatre: theatre });
+    res.status(200).json(actor);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 const getActorByTheatre = async (req, res) => {
   //To get data using an id
   try {
@@ -60,6 +72,7 @@ const createNewActor = async (req, res) => {
 
 module.exports = {
   getAllActors,
+  getActorByName,
   getActorByPlay,
   getActorByTheatre,
   getActorById,
