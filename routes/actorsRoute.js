@@ -12,9 +12,9 @@ const {
 
 router.get("/", getAllActors);
 router.get("/:theatre/:name", getActorByName);
-router.get("/play/:play", getActorByPlay);
+router.get("/plays/play/:play", getActorByPlay);
 router.get("/:theatre", getActorByTheatre);
-router.get("/:theatre/:id", getActorById);
+router.get("/:theatre/id/:id", getActorById);
 router.post("/", createNewActor);
 
 module.exports = router;
