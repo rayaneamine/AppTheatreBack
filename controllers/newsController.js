@@ -20,6 +20,22 @@ const getNewsByTheatre = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+const getNewsById = async (req, res) => {
+  //To get data using an id
+  try {
+    const theatre = req.params.theatre;
+    const id = req.params.id;
+    const news = await News.findOne({ _id: id, theatre: theatre });
+    if (!news) {
+      return res.status(404).json({ message: "News not found" });
+    }
+    res.status(200).json(news);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 const createNewNews = async (req, res) => {
   //To save data in the database
   try {
@@ -31,4 +47,4 @@ const createNewNews = async (req, res) => {
   }
 };
 
-module.exports = { getAllNews, getNewsByTheatre, createNewNews };
+module.exports = { getAllNews, getNewsByTheatre, getNewsById, createNewNews };

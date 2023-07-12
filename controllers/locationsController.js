@@ -20,6 +20,22 @@ const getLocationByTheatre = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+const getLocationById = async (req, res) => {
+  //To get data using an id
+  try {
+    const theatre = req.params.theatre;
+    const id = req.params.id;
+    const location = await Locations.findOne({ _id: id, theatre: theatre });
+    if (!location) {
+      return res.status(404).json({ message: "Location not found" });
+    }
+    res.status(200).json(location);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 const createNewLocation = async (req, res) => {
   //To save data in the database
   try {
@@ -31,4 +47,9 @@ const createNewLocation = async (req, res) => {
   }
 };
 
-module.exports = { getAllLocations, getLocationByTheatre, createNewLocation };
+module.exports = {
+  getAllLocations,
+  getLocationByTheatre,
+  getLocationById,
+  createNewLocation,
+};
