@@ -14,7 +14,7 @@ const getActorByPlay = async (req, res) => {
   //To get data using an id
   try {
     const name = req.params.name;
-    const actor = await Actors.find({ plays: { name: name } });
+    const actor = await Actors.find({ "plays.name": name });
     res.status(200).json(actor);
   } catch (error) {
     res.status(500).json({ message: error.message });
