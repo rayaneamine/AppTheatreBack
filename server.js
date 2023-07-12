@@ -3,7 +3,7 @@ const cors = require("cors");
 const { connectionToDataBase } = require("./config/env.js");
 const ENV = require("./config/env.js");
 
-const PORT = ENV.PORT || 8000;
+const PORT = ENV.PORT || 8080;
 
 //Connexionto database
 connectionToDataBase();
