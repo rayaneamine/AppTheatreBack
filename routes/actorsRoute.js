@@ -12,7 +12,7 @@ const {
 
 router.get("/", getAllActors);
 router.get("/:theatre/:name", getActorByName);
-router.get("/:name", getActorByPlay);
+router.get("/actors/play/:name", getActorByPlay);
 router.get("/:theatre", getActorByTheatre);
 router.get("/:theatre/id/:id", getActorById);
 router.post("/", createNewActor);
