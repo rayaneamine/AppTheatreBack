@@ -47,9 +47,8 @@ const getActorByTheatre = async (req, res) => {
 const getActorById = async (req, res) => {
   //To get data using an id
   try {
-    const theatre = req.params.theatre;
     const id = req.params.id;
-    const actor = await Actors.findOne({ _id: id, theatre: theatre });
+    const actor = await Actors.findOne({ _id: id });
     if (!actor) {
       return res.status(404).json({ message: "Actor not found" });
     }

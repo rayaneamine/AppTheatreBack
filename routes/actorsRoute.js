@@ -14,7 +14,7 @@ router.get("/", getAllActors);
 router.get("/:theatre/:name", getActorByName);
 router.get("/actors/play/:name", getActorByPlay);
 router.get("/:theatre", getActorByTheatre);
-router.get("/:theatre/id/:id", getActorById);
+router.get("/actor/id/:id", getActorById);
 router.post("/", createNewActor);
 
 module.exports = router;
