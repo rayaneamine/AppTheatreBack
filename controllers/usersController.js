@@ -46,9 +46,46 @@ const createNewUser = async (req, res) => {
   }
 };
 
+const updateUser = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const { password } = req.body;
+
+    const user = await Users.findById(id);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    user.password = password;
+    await user.save(); // Trigger pre-save hook
+
+    res.status(200).json({ message: "User updated successfully" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+const deleteUser = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const deletedUser = await Users.findByIdAndDelete(id);
+
+    if (!deletedUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.status(200).json({ message: "User deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 module.exports = {
   getAllUsers,
   getUserByEmail,
   getUserById,
   createNewUser,
+  updateUser,
+  deleteUser,
 };
