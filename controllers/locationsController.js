@@ -47,9 +47,45 @@ const createNewLocation = async (req, res) => {
   }
 };
 
+const deleteLocation = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const deletedLocation = await Locations.findByIdAndDelete(id);
+
+    if (!deletedLocation) {
+      return res.status(404).json({ message: "Location not found" });
+    }
+
+    res.status(200).json({ message: "Location deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+const updateLocation = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const updates = req.body;
+
+    const updatedLocation = await Locations.findByIdAndUpdate(id, updates, {
+      new: true,
+    });
+
+    if (!updatedLocation) {
+      return res.status(404).json({ message: "Location not found" });
+    }
+
+    res.status(200).json(updatedLocation);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 module.exports = {
   getAllLocations,
   getLocationByTheatre,
   getLocationById,
   createNewLocation,
+  deleteLocation,
+  updateLocation,
 };

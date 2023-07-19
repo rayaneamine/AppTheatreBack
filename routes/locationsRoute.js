@@ -6,11 +6,15 @@ const {
   getLocationByTheatre,
   getLocationById,
   createNewLocation,
+  deleteLocation,
+  updateLocation,
 } = require("../controllers/locationsController.js");
 
 router.get("/", getAllLocations);
 router.get("/:theatre", getLocationByTheatre);
 router.get("/:theatre/id/:id", getLocationById);
-router.post("/", createNewLocation);
+router.delete("/delete/:id", deleteLocation);
+router.put("/put/:id", updateLocation);
+router.post("/post", createNewLocation);
 
 module.exports = router;

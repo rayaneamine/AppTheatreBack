@@ -47,4 +47,45 @@ const createNewNews = async (req, res) => {
   }
 };
 
-module.exports = { getAllNews, getNewsByTheatre, getNewsById, createNewNews };
+const deleteNews = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const deletedNews = await News.findByIdAndDelete(id);
+
+    if (!deletedNews) {
+      return res.status(404).json({ message: "News not found" });
+    }
+
+    res.status(200).json({ message: "News deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+const updateNews = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const updates = req.body;
+
+    const updatedNews = await News.findByIdAndUpdate(id, updates, {
+      new: true,
+    });
+
+    if (!updatedNews) {
+      return res.status(404).json({ message: "News not found" });
+    }
+
+    res.status(200).json(updatedNews);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+module.exports = {
+  getAllNews,
+  getNewsByTheatre,
+  getNewsById,
+  createNewNews,
+  deleteNews,
+  updateNews,
+};

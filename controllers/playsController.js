@@ -58,10 +58,46 @@ const createNewPlay = async (req, res) => {
   }
 };
 
+const deletePlay = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const deletedPlay = await Plays.findByIdAndDelete(id);
+
+    if (!deletedPlay) {
+      return res.status(404).json({ message: "Play not found" });
+    }
+
+    res.status(200).json({ message: "Play deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+const updatePlay = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const updates = req.body;
+
+    const updatedPlay = await Plays.findByIdAndUpdate(id, updates, {
+      new: true,
+    });
+
+    if (!updatedPlay) {
+      return res.status(404).json({ message: "Play not found" });
+    }
+
+    res.status(200).json(updatedPlay);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 module.exports = {
   getAllPlays,
   getPlayByName,
   getPlayByTheatre,
   getPlayById,
   createNewPlay,
+  deletePlay,
+  updatePlay,
 };
