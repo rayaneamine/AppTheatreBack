@@ -69,6 +69,40 @@ const createNewActor = async (req, res) => {
   }
 };
 
+const deleteActor = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const deletedActor = await Actors.findByIdAndDelete(id);
+
+    if (!deletedActor) {
+      return res.status(404).json({ message: "Actor not found" });
+    }
+
+    res.status(200).json({ message: "Actor deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+const updateActor = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const updates = req.body;
+
+    const updatedActor = await Actors.findByIdAndUpdate(id, updates, {
+      new: true,
+    });
+
+    if (!updatedActor) {
+      return res.status(404).json({ message: "Actor not found" });
+    }
+
+    res.status(200).json(updatedActor);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 module.exports = {
   getAllActors,
   getActorByName,
@@ -76,4 +110,6 @@ module.exports = {
   getActorByTheatre,
   getActorById,
   createNewActor,
+  deleteActor,
+  updateActor,
 };

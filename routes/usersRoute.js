@@ -12,9 +12,9 @@ const {
 
 router.get("/", getAllUsers);
 router.get("/:id", getUserById);
-router.put("/:id", updateUser);
-router.delete("/:id", deleteUser);
+router.put("/put/:id", updateUser);
+router.delete("/delete/:id", deleteUser);
 router.get("/email/:email", getUserByEmail);
-router.post("/", createNewUser);
+router.post("/post", createNewUser);
 
 module.exports = router;
