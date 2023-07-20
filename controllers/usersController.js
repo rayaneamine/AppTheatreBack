@@ -1,4 +1,5 @@
 const Users = require("../models/usersModel.js");
+const bcrypt = require("bcrypt");
 
 const getAllUsers = async (req, res) => {
   //To get all the data from the database
@@ -81,6 +82,29 @@ const deleteUser = async (req, res) => {
   }
 };
 
+const checkUserExists = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    // Find the user with the given email
+    const user = await Users.findOne({ email });
+
+    // If a user is found, compare the provided password with the stored hashed password
+    if (user) {
+      const isMatch = await bcrypt.compare(password, user.password);
+      if (isMatch) {
+        res.status(200).json({ id: user._id });
+      } else {
+        res.status(200).json({ message: "The password is incorrect" });
+      }
+    } else {
+      res.status(200).json({ message: "No user found" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 module.exports = {
   getAllUsers,
   getUserByEmail,
@@ -88,4 +112,5 @@ module.exports = {
   createNewUser,
   updateUser,
   deleteUser,
+  checkUserExists,
 };
