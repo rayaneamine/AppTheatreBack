@@ -111,6 +111,21 @@ const updateActor = async (req, res) => {
     const id = req.params.id;
     const updates = req.body;
 
+    // Check if the "plays" field is provided in the request body
+    if (updates.plays && updates.plays.length > 0) {
+      // Find the plays by their IDs, including only the desired fields
+      const foundPlays = await Plays.find({ _id: { $in: updates.plays } })
+        .select("id name imagePath description")
+        .lean();
+
+      if (!foundPlays || foundPlays.length !== updates.plays.length) {
+        return res.status(404).json({ message: "One or more plays not found" });
+      }
+
+      // Update the actor with the provided data and add the associated plays
+      updates.plays = foundPlays;
+    }
+
     const updatedActor = await Actors.findByIdAndUpdate(id, updates, {
       new: true,
     });
