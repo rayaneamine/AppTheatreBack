@@ -1,4 +1,5 @@
 const Actors = require("../models/actorsModel.js");
+const Plays = require("../models/playsModel.js");
 
 const getAllActors = async (req, res) => {
   //To get all the data from the database
@@ -59,10 +60,31 @@ const getActorById = async (req, res) => {
 };
 
 const createNewActor = async (req, res) => {
-  //To save data in the database
   try {
-    const actors = await Actors.create(req.body);
-    res.status(200).json(actors);
+    const { name, role, biography, imagePath, videoPath, theatre, playIds } =
+      req.body;
+
+    // Find the plays by their IDs, including only the desired fields
+    const foundPlays = await Plays.find({ _id: { $in: playIds } })
+      .select("id name imagePath description")
+      .lean();
+
+    if (!foundPlays || foundPlays.length !== playIds.length) {
+      return res.status(404).json({ message: "One or more plays not found" });
+    }
+
+    // Create a new actor with the provided data and associated plays
+    const newActor = await Actors.create({
+      name,
+      role,
+      biography,
+      imagePath,
+      videoPath,
+      theatre,
+      plays: foundPlays, // Assign the array of plays with selected fields to the actor's "plays" field
+    });
+
+    res.status(200).json(newActor);
   } catch (error) {
     console.error(error.message);
     res.status(500).json({ message: error.message });
