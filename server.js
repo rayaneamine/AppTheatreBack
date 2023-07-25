@@ -27,6 +27,8 @@ app.use("/locations", require("./routes/locationsRoute.js"));
 app.use("/news", require("./routes/newsRoute.js"));
 //Users document (utilisateurs)
 app.use("/users", require("./routes/usersRoute.js"));
+//To upload images to the public folder
+app.use("/images", require("./routes/imagesRoute.js"));
 
 app.listen(PORT, () => {
   // this code will run the application we want theapplication to run after connecting to the DB
